@@ -128,7 +128,7 @@ class OAuth2CallbackView(OAuth2View):
             )
         app = self.adapter.get_provider().get_app(self.request)
         client = self.get_client(self.request, app)
-
+        client.state = SocialLogin.stash_state(request)
         try:
             access_token = client.get_access_token(request.GET["code"])
             token = self.adapter.parse_token(access_token)
